@@ -22,7 +22,9 @@ async def answer(bot, query):
 
     results = []
     text = query.query.strip()
-    if 'anime' in query.query:
+    if text.strip() == "":
+        print("ded")
+    elif text.split()[0] == "anime":
         #string, file_type = query.query.split()[0]
         string = text.split()[1]
         file_type = text.split()[1].lower()
