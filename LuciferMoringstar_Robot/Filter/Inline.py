@@ -23,10 +23,10 @@ async def answer(bot, query):
     results = []
     if 'anime' in query.query:
         string, file_type = query.query.split('anime', maxsplit=1)
-        string = string.strip()
-        file_type = file_type.strip().lower()
+        string = string.strip()[1]
+        file_type = file_type.strip()[1].lower()
     else:
-        string = query.query.strip()
+        string = query.query.strip()[1]
         file_type = None
 
     offset = int(query.offset or 0)
