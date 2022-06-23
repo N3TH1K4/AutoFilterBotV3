@@ -21,15 +21,12 @@ async def answer(bot, query):
         return
 
     results = []
-    text = query.query.strip()
-    if text.strip() == "":
-        string = text.split()[1]
-    elif text.split()[0] == "anime":
-        #string, file_type = query.query.split()[0]
-        string = text.split()[1]
-        file_type = text.split()[1].lower()
-    elif text.split()[0] == "anime":
-        string = text.split()[1]
+    if 'anime' in query.query:
+        string, file_type = query.query.split('anime', maxsplit=1)
+        string = string.strip()
+        file_type = file_type.strip().lower()
+    else:
+        string = query.query.strip()
         file_type = None
 
     offset = int(query.offset or 0)
