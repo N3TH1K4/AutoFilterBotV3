@@ -21,8 +21,8 @@ async def answer(bot, query):
         return
 
     results = []
-    if '|' in query.query:
-        string, file_type = query.query.split('|', maxsplit=1)
+    if 'anime' in query.query:
+        string, file_type = query.query.split('anime', maxsplit=1)
         string = string.strip()
         file_type = file_type.strip().lower()
     else:
