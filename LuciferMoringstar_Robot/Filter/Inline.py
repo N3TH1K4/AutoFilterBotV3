@@ -25,9 +25,9 @@ async def answer(bot, query):
         string, file_type = query.query.split('anime', maxsplit=1)
         string = string.strip()[1]
         file_type = file_type.strip()[1].lower()
-    else:
-        string = query.query.strip()[1]
-        file_type = None
+    #else:
+        #string = query.query.strip()[1]
+        #file_type = None
 
     offset = int(query.offset or 0)
     reply_markup = get_reply_markup(query=string)
