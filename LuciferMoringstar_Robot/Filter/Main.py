@@ -46,8 +46,8 @@ async def filter(client, message):
                 disable_web_page_preview=True
             )
             return
-    #if re.findall("((^\/|^,|^!|^\.|^[\U0001F600-\U000E007F]).*)", message.text):
-        #return
+    if re.findall("((^\/|^,|^!|^\.|^[\U0001F600-\U000E007F]).*)", message.command):
+        return
     if len(message.command) < 2:    
         btn = []
         search = message.text.split(None, 1)[1]
