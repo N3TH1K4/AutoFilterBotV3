@@ -97,31 +97,7 @@ async def save_file(media):
             logger.warning(media.file_name + " is already saved in database")
         else:
             logger.info(media.file_name + " is saved in database")
-            #await client.send_message(chat_id=-1001539488215,text=f"{fff} is added to the dbs")
-async def log_info(client, message,media):
-    file_id, file_ref = unpack_new_file_id(media.file_id)
-    try:
-        file = Media(
-            file_id=file_id,
-            file_ref=file_ref,
-            file_name=media.file_name,
-            file_size=media.file_size,
-            file_type=media.file_type,
-            mime_type=media.mime_type,
-            caption=media.caption.html if media.caption else None,
-        )
-        fff = media.file_name
-    except ValidationError:
-        logger.exception('Error occurred while saving file in database')
-    else:
-        try:
-            await file.commit()
-        except DuplicateKeyError:
-            #logger.warning(media.file_name + " is already saved in database")
-        else:
-            #logger.info(media.file_name + " is saved in database")
-            await client.send_message(chat_id=-1001539488215,text=f"{fff} is added to the dbs")
-            
+            #await client.send_message(chat_id=-1001539488215,text=f"{fff} is added to the dbs")            
 async def get_search_results(query, file_type=None, max_results=10, offset=0):
     """For given query return (results, next_offset)"""
 
