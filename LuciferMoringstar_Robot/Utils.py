@@ -8,6 +8,9 @@ from pymongo.errors import DuplicateKeyError
 from umongo import Instance, Document, fields
 from motor.motor_asyncio import AsyncIOMotorClient
 from marshmallow.exceptions import ValidationError
+from pyrogram import Client, filters
+BUTTONS = {}
+BOT = {}
 import os
 import PTN
 import requests
@@ -19,12 +22,12 @@ COLLECTION_NAME_2="Posters"
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-client = AsyncIOMotorClient(DATABASE_URI)
-db = client[DATABASE_NAME]
+clieent = AsyncIOMotorClient(DATABASE_URI)
+db = clieent[DATABASE_NAME]
 instance = Instance.from_db(db)
 
 IClient = AsyncIOMotorClient(DATABASE_URI_2)
-imdbdb=client[DATABASE_NAME_2]
+imdbdb=clieent[DATABASE_NAME_2]
 imdb=Instance.from_db(imdbdb)
 
 @instance.register
@@ -84,6 +87,7 @@ async def save_file(media):
             mime_type=media.mime_type,
             caption=media.caption.html if media.caption else None,
         )
+        fff = media.file_name
     except ValidationError:
         logger.exception('Error occurred while saving file in database')
     else:
@@ -93,6 +97,7 @@ async def save_file(media):
             logger.warning(media.file_name + " is already saved in database")
         else:
             logger.info(media.file_name + " is saved in database")
+            await client.send_message(chat_id=-1001539488215,text=f"{fff} is added to the dbs}")
 
 
 async def get_search_results(query, file_type=None, max_results=10, offset=0):
