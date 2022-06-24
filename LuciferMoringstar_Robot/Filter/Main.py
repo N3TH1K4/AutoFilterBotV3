@@ -41,7 +41,7 @@ async def filter(client, message):
         except Exception:
             await client.send_message(
                 chat_id=message.from_user.id,
-                text="Something went Wrong.",
+                text="Aaah Shit Happened!",
                 parse_mode="markdown",
                 disable_web_page_preview=True
             )
@@ -52,7 +52,7 @@ async def filter(client, message):
         btn = []
         search = message.text.split(None, 1)[1]
         files = await get_filter_results(query=search)
-        mo_tech_yt = f"**Here's The Result For The Query **{search}**"
+        mo_tech_yt = f"Here's The Result For The Query **{search}**"
         if files:
             for file in files:
                 file_id = file.file_id
@@ -79,9 +79,7 @@ async def filter(client, message):
             buttons.append(
                 [InlineKeyboardButton(text="📃 Pages 1/1",callback_data="pages")]
             )
-            poster=None
-            if API_KEY:
-                poster=await get_poster(search)
+            poster="https://s3.zerochan.net/240/37/27/2803887.jpg"
             if poster:
                 await message.reply_photo(photo=poster, caption=mo_tech_yt, reply_markup=InlineKeyboardMarkup(buttons))
 
@@ -98,9 +96,7 @@ async def filter(client, message):
         buttons.append(
             [InlineKeyboardButton(text=f"📃 Pages 1/{data['total']}",callback_data="pages")]
         )
-        poster=None
-        if API_KEY:
-            poster=await get_poster(search)
+        poster="https://s3.zerochan.net/240/37/27/2803887.jpg"
         if poster:
             await message.reply_photo(photo=poster, caption=mo_tech_yt, reply_markup=InlineKeyboardMarkup(buttons))
         else:
@@ -113,7 +109,7 @@ async def group(client, message):
     if len(message.command) > 2:    
         btn = []
         search = message.text.split(None, 1)[1]
-        mo_tech_yt = f"**🗂️ Title:** {search}\n**⭐ Rating:** {random.choice(RATING)}\n**🎭 Genre:** {random.choice(GENRES)}\n**📤 Uploaded by {message.chat.title}**"
+        mo_tech_yt = f"Here's The Result For The Query **{search}**"
         nyva=BOT.get("username")
         if not nyva:
             botusername=await client.get_me()
@@ -144,9 +140,7 @@ async def group(client, message):
             buttons.append(
                 [InlineKeyboardButton(text="📃 Pages 1/1",callback_data="pages")]
             )
-            poster=None
-            if API_KEY:
-                poster=await get_poster(search)
+            poster="https://s3.zerochan.net/240/37/27/2803887.jpg"
             if poster:
                 await message.reply_photo(photo=poster, caption=mo_tech_yt, reply_markup=InlineKeyboardMarkup(buttons))
             else:
@@ -162,9 +156,7 @@ async def group(client, message):
         buttons.append(
             [InlineKeyboardButton(text=f"📃 Pages 1/{data['total']}",callback_data="pages")]
         )
-        poster=None
-        if API_KEY:
-            poster=await get_poster(search)
+        poster="https://s3.zerochan.net/240/37/27/2803887.jpg"
         if poster:
             await message.reply_photo(photo=poster, caption=mo_tech_yt, reply_markup=InlineKeyboardMarkup(buttons))
         else:
@@ -203,7 +195,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             try:
                 data = BUTTONS[keyword]
             except KeyError:
-                await query.answer("You are using this for one of my old message, please send the request again.",show_alert=True)
+                await query.answer("Kono Aho! You are using this for one of my old message, send the request again.. Aaah Mendokusei!",show_alert=True)
                 return
 
             if int(index) == int(data["total"]) - 2:
@@ -241,7 +233,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             try:
                 data = BUTTONS[keyword]
             except KeyError:
-                await query.answer("You are using this for one of my old message, please send the request again.",show_alert=True)
+                await query.answer("Kono Aho! You are using this for one of my old message, send the request again.. Aaah Mendokusei!",show_alert=True)
                 return
 
             if int(index) == 1:
@@ -272,21 +264,6 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     reply_markup=InlineKeyboardMarkup(buttons)
                 )
                 return
-        elif query.data == "help":
-            buttons = [
-                [
-                    InlineKeyboardButton('Making Video', url=f'{TUTORIAL}')
-                ]
-                ]
-            await query.message.edit(text=f"{HELP}", reply_markup=InlineKeyboardMarkup(buttons), disable_web_page_preview=True)
-
-        elif query.data == "about":
-            buttons = [
-                [
-                    InlineKeyboardButton('Making Video', url=f'{TUTORIAL}')
-                ]
-                ]
-            await query.message.edit(text=f"{ABOUT}", reply_markup=InlineKeyboardMarkup(buttons), disable_web_page_preview=True)
 
 
         elif query.data.startswith("pr0fess0r_99"):
@@ -353,4 +330,4 @@ async def cb_handler(client: Client, query: CallbackQuery):
         elif query.data == "pages":
             await query.answer()
     else:
-        await query.answer("കൌതുകും ലേശം കൂടുതൽ ആണല്ലേ👀",show_alert=True)
+        await query.answer("Thanoshimiii!",show_alert=True)
