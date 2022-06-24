@@ -10,7 +10,7 @@ import random
 BUTTONS = {}
 BOT = {}
 
-@Client.on_message(filters.command("alink") & filters.private & filters.incoming & filters.user(AUTH_USERS) if AUTH_USERS else filters.command("alink") & filters.private & filters.incoming)
+@Client.on_message(filters.command("sanime") & filters.private & filters.incoming & filters.user(AUTH_USERS) if AUTH_USERS else filters.command("sanime") & filters.private & filters.incoming)
 async def filter(client, message):
     if AUTH_CHANNEL:
         invite_link = await client.create_chat_invite_link(int(AUTH_CHANNEL))
@@ -48,6 +48,7 @@ async def filter(client, message):
                     )
         else:
             await client.send_sticker(chat_id=message.from_user.id, sticker='CAACAgUAAxkBAAICcGK1MCEEUneEcQiHvuatiIkEjDMCAAJhBQACIw_BVMuEg6Eos_-gHgQ')
+            await message.reply_text(f"I aint got  **{search}** in my DBS")
             return
 
         if not btn:
@@ -89,7 +90,7 @@ async def filter(client, message):
         else:
             await message.reply_text(mo_tech_yt, reply_markup=InlineKeyboardMarkup(buttons))
 
-@Client.on_message(filters.command("alink") & filters.group & filters.incoming & filters.chat(AUTH_GROUPS) if AUTH_GROUPS else filters.command("alink") & filters.group & filters.incoming)
+@Client.on_message(filters.command("sanime") & filters.group & filters.incoming & filters.chat(AUTH_GROUPS) if AUTH_GROUPS else filters.command("sanime") & filters.group & filters.incoming)
 async def group(client, message):
     #if re.findall("((^\/|^,|^!|^\.|^[\U0001F600-\U000E007F]).*)", message.text):
         #return
@@ -203,7 +204,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 buttons = data['buttons'][int(index)+1].copy()
 
                 buttons.append(
-                    [InlineKeyboardButton("⬷ BACK", callback_data=f"back_{int(index)+1}_{keyword}"),InlineKeyboardButton("NEXT ⏩", callback_data=f"next_{int(index)+1}_{keyword}")]
+                    [InlineKeyboardButton("⬷ BACK", callback_data=f"back_{int(index)+1}_{keyword}"),InlineKeyboardButton("NEXT ⤐", callback_data=f"next_{int(index)+1}_{keyword}")]
                 )
                 buttons.append(
                     [InlineKeyboardButton(f"📝 Pages {int(index)+2}/{data['total']}", callback_data="pages")]
@@ -241,7 +242,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 buttons = data['buttons'][int(index)-1].copy()
 
                 buttons.append(
-                    [InlineKeyboardButton("⬷ BACK", callback_data=f"back_{int(index)-1}_{keyword}"),InlineKeyboardButton("NEXT ⏩", callback_data=f"next_{int(index)-1}_{keyword}")]
+                    [InlineKeyboardButton("⬷ BACK", callback_data=f"back_{int(index)-1}_{keyword}"),InlineKeyboardButton("NEXT ⤐", callback_data=f"next_{int(index)-1}_{keyword}")]
                 )
                 buttons.append(
                     [InlineKeyboardButton(f"📝 Pages {int(index)}/{data['total']}", callback_data="pages")]
