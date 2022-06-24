@@ -16,7 +16,7 @@ LOG_CHANNEL = BROADCAST_CHANNEL
 
 db = Database(DB_URL, SESSION)
 
-@Client.on_message(filters.command("filerstart"))
+@Client.on_message(filters.command("filterstart"))
 async def start(bot, message):
     chat_id = message.from_user.id
     if not await db.is_user_exist(chat_id):
@@ -41,28 +41,10 @@ async def start(bot, message):
                         disable_web_page_preview=True
                     )
                     return
-            except UserNotParticipant:
-                ident, file_id = message.text.split("_-_-_-_")
-                await bot.send_message(
-                    chat_id=message.from_user.id,
-                    text="**Please Join My Updates Channel to use this Bot!**",
-                    reply_markup=InlineKeyboardMarkup(
-                        [
-                            [
-                                InlineKeyboardButton("📢 Join Updates Channel 📢", url=invite_link.invite_link)
-                            ],
-                            [
-                                InlineKeyboardButton("🔄 Try Again", callback_data=f"checksub#{file_id}")
-                            ]
-                        ]
-                    ),
-                    parse_mode="markdown"
-                )
-                return
             except Exception:
                 await bot.send_message(
                     chat_id=message.from_user.id,
-                    text="Something went Wrong.",
+                    text="Aaah Shit Happened!.",
                     parse_mode="markdown",
                     disable_web_page_preview=True
                 )
@@ -81,21 +63,16 @@ async def start(bot, message):
                         print(e)
                         f_caption=f_caption
                 if f_caption is None:
-                    f_caption = f"{files.file_name}"
-                buttons = [
-                    [
-                        InlineKeyboardButton('🎖 DEPLOY YOURS 🎖', url=f'{TUTORIAL}')
-                    ]
-                    ]
+                    if "@Anime_Gallery" in files.file_name:
+                        f_caption = f"{files.file_name}\n**Owner of This File is @Anime_Gallery Team**\n\nAnime Filter Powered By: __HasHCatz__"
                 await bot.send_cached_media(
                     chat_id=message.from_user.id,
                     file_id=file_id,
                     caption=f_caption,
-                    reply_markup=InlineKeyboardMarkup(buttons)
                     )
         except Exception as err:
             await message.reply_text(f"Something went wrong!\n\n**Error:** `{err}`")
-    elif len(message.command) > 1 and message.command[1] == 'subscribe':
+    elif len(message.command) > 1 and message.command[1] == 'sssubscribe':
         invite_link = await bot.create_chat_invite_link(int(AUTH_CHANNEL))
         await bot.send_message(
             chat_id=message.from_user.id,
