@@ -86,19 +86,7 @@ async def start(bot, message):
             )
         )
     else:
-        await message.reply_text(
-            START_MSG,
-            parse_mode="Markdown",
-            disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup(
-                [[
-                InlineKeyboardButton("Search Here", switch_inline_query_current_chat='')
-                ],[
-                InlineKeyboardButton("Help", callback_data="help"),
-                InlineKeyboardButton("About", callback_data="about")
-                ]]
-            )
-        )
+        await message.reply_text("")
         StopPropagation
 
 @Client.on_message(filters.command('filterchannel') & filters.user(ADMINS))
