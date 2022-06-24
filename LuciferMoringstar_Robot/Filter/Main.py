@@ -266,13 +266,19 @@ async def cb_handler(client: Client, query: CallbackQuery):
                         print(e)
                         f_caption=f_caption
                 if f_caption is None:
-                    f_caption = f"{files.file_name}"
+                    if "@Anime_Gallery" in files.file_name:
+                        f_caption = f"{files.file_name}\n**Owner of This File is @Anime_Gallery Team**\n\nAnime Filter Powered By: __HasHCatz__"
+                        buttons.append(
+                    [InlineKeyboardButton(f"Anime Gallery", url="https://t.me/Anime_Gallery")]
+                )
+                    #f_caption = f"{files.file_name}\n**"
                 
                 await query.answer()
                 await client.send_cached_media(
                     chat_id=query.from_user.id,
                     file_id=file_id,
                     caption=f_caption,
+                    reply_markup=InlineKeyboardMarkup(buttons),
                     )
         elif query.data.startswith("checksub"):
             if AUTH_CHANNEL and not await is_subscribed(client, query):
