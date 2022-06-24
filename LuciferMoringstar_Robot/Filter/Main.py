@@ -52,7 +52,7 @@ async def filter(client, message):
         btn = []
         search = message.text.split(None, 1)[1]
         files = await get_filter_results(query=search)
-        mo_tech_yt = f"**🗂️ Title:** {search}\n**⭐ Rating:** {random.choice(RATING)}\n**🎭 Genre:** {random.choice(GENRES)}\n**📤 Uploaded by {fname}**"
+        mo_tech_yt = f"**Here's The Result For The Query **{search}**"
         if files:
             for file in files:
                 file_id = file.file_id
