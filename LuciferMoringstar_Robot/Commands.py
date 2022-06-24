@@ -16,7 +16,7 @@ LOG_CHANNEL = BROADCAST_CHANNEL
 
 db = Database(DB_URL, SESSION)
 
-@Client.on_message(filters.command("filterstart"))
+@Client.on_message(filters.command("start"))
 async def start(bot, message):
     chat_id = message.from_user.id
     if not await db.is_user_exist(chat_id):
@@ -28,7 +28,7 @@ async def start(bot, message):
             f"#NEWUSER: \n\nNew User [{message.from_user.first_name}](tg://user?id={message.from_user.id}) started @{BOT_USERNAME} !!",
         )
     usr_cmdall1 = message.text
-    if usr_cmdall1.startswith("start=pr0fess0r_99"):
+    if usr_cmdall1.startswith("/start pr0fess0r_99"):
         if AUTH_CHANNEL:
             invite_link = await bot.create_chat_invite_link(int(AUTH_CHANNEL))
             try:
