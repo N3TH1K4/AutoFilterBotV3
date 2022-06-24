@@ -48,11 +48,11 @@ async def filter(client, message):
                     )
         else:
             await client.send_sticker(chat_id=message.from_user.id, sticker='CAACAgQAAxkBAAICeWK1MzZWqrA4kt0M2dB-FhPf7KRSAAJ-zQ8AAZXbYi-BuAYMW1yptR4E')
-            await message.reply_text(f"I aint got  **{search}** in my DBS")
+            await message.reply_text(f"I aint got  **{search}**  in my DBS")
             return
 
         if not btn:
-            await message.reply_text(f"I aint got  **{search}** in my DBS")
+            await message.reply_text(f"I aint got  **{search}**  in my DBS")
             return
 
         if len(btn) > 10: 
@@ -112,7 +112,10 @@ async def group(client, message):
                     [InlineKeyboardButton(text=f"{filename}", url=f"https://telegram.dog/{nyva}?start=pr0fess0r_99_-_-_-_{file_id}")]
                 )
         else:
+            await client.send_sticker(chat_id=message.from_user.id, sticker='CAACAgQAAxkBAAICeWK1MzZWqrA4kt0M2dB-FhPf7KRSAAJ-zQ8AAZXbYi-BuAYMW1yptR4E')
+            await message.reply_text(f"I aint got  **{search}**  in my DBS")
             return
+        
         if not btn:
             return
 
