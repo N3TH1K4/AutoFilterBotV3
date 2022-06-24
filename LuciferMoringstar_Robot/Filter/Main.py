@@ -10,7 +10,7 @@ import random
 BUTTONS = {}
 BOT = {}
 
-@Client.on_message(filters.command("alink") & filters.private & filters.incoming & filters.user(AUTH_USERS) if AUTH_USERS else filters.text & filters.private & filters.incoming)
+@Client.on_message(filters.command("alink") & filters.private & filters.incoming & filters.user(AUTH_USERS) if AUTH_USERS else filters.command("alink") & filters.private & filters.incoming)
 async def filter(client, message):
     if AUTH_CHANNEL:
         invite_link = await client.create_chat_invite_link(int(AUTH_CHANNEL))
@@ -46,8 +46,8 @@ async def filter(client, message):
                 disable_web_page_preview=True
             )
             return
-    if re.findall("((^\/|^,|^!|^\.|^[\U0001F600-\U000E007F]).*)", message.command):
-        return
+    #if re.findall("((^\/|^,|^!|^\.|^[\U0001F600-\U000E007F]).*)", message.command):
+        #return
     if len(message.command) < 2:    
         btn = []
         search = message.text.split(None, 1)[1]
@@ -106,7 +106,7 @@ async def filter(client, message):
         else:
             await message.reply_text(mo_tech_yt, reply_markup=InlineKeyboardMarkup(buttons))
 
-@Client.on_message(filters.command("alink") & filters.group & filters.incoming & filters.chat(AUTH_GROUPS) if AUTH_GROUPS else filters.text & filters.group & filters.incoming)
+@Client.on_message(filters.command("alink") & filters.group & filters.incoming & filters.chat(AUTH_GROUPS) if AUTH_GROUPS else filters.command("alink") & filters.group & filters.incoming)
 async def group(client, message):
     #if re.findall("((^\/|^,|^!|^\.|^[\U0001F600-\U000E007F]).*)", message.text):
         #return
