@@ -16,7 +16,7 @@ LOG_CHANNEL = BROADCAST_CHANNEL
 
 db = Database(DB_URL, SESSION)
 
-@Client.on_message(filters.command("start"))
+@Client.on_message(filters.command("filerstart"))
 async def start(bot, message):
     chat_id = message.from_user.id
     if not await db.is_user_exist(chat_id):
@@ -124,7 +124,7 @@ async def start(bot, message):
         )
         StopPropagation
 
-@Client.on_message(filters.command('channel') & filters.user(ADMINS))
+@Client.on_message(filters.command('filterchannel') & filters.user(ADMINS))
 async def channel_info(bot, message):
     """Send basic information of channel"""
     if isinstance(CHANNELS, (int, str)):
@@ -165,7 +165,7 @@ async def broadcast_handler_open(_, m):
         await broadcast(m, db)
 
 
-@Client.on_message(filters.private & filters.command("stats"))
+@Client.on_message(filters.private & filters.command("filterstats"))
 async def sts(c, m):
     if m.from_user.id not in ADMIN_ID:
         await m.delete()
@@ -177,7 +177,7 @@ async def sts(c, m):
     )
 
 
-@Client.on_message(filters.private & filters.command("ban_user"))
+@Client.on_message(filters.private & filters.command("filterban_user"))
 async def ban(c, m):
     if m.from_user.id not in ADMIN_ID:
         await m.delete()
@@ -217,7 +217,7 @@ async def ban(c, m):
         )
 
 
-@Client.on_message(filters.private & filters.command("unban_user"))
+@Client.on_message(filters.private & filters.command("filterunban_user"))
 async def unban(c, m):
     if m.from_user.id not in ADMIN_ID:
         await m.delete()
@@ -252,7 +252,7 @@ async def unban(c, m):
         )
 
 
-@Client.on_message(filters.private & filters.command("banned_users"))
+@Client.on_message(filters.private & filters.command("filterbanned_users"))
 async def _banned_usrs(c, m):
     if m.from_user.id not in ADMIN_ID:
         await m.delete()
@@ -278,7 +278,7 @@ async def _banned_usrs(c, m):
 
 
 
-@Client.on_message(filters.command('total') & filters.user(ADMINS))
+@Client.on_message(filters.command('filtertotal') & filters.user(ADMINS))
 async def total(bot, message):
     """Show total files in database"""
     msg = await message.reply("Processing...⏳", quote=True)
@@ -299,7 +299,7 @@ async def log_file(bot, message):
         await message.reply(str(e))
 
 
-@Client.on_message(filters.command('delete') & filters.user(ADMINS))
+@Client.on_message(filters.command('/filterdelete') & filters.user(ADMINS))
 async def delete(bot, message):
     """Delete file from database"""
     reply = message.reply_to_message
@@ -326,7 +326,7 @@ async def delete(bot, message):
         await msg.edit('File is successfully deleted from database')
     else:
         await msg.edit('File not found in database')
-@Client.on_message(filters.command('about'))
+@Client.on_message(filters.command('filterabout'))
 async def bot_info(bot, message):
     buttons = [
         [
