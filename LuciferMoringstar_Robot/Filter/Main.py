@@ -140,7 +140,7 @@ async def group(client, message):
             buttons.append(
                 [InlineKeyboardButton(text="📃 Pages 1/1",callback_data="pages")]
             )
-            poster="https://s3.zerochan.net/240/37/27/2803887.jpg"
+            poster="https://static.zerochan.net/Archer.%28Ishtar%29.full.2803887.jpg"
             if poster:
                 await message.reply_photo(photo=poster, caption=mo_tech_yt, reply_markup=InlineKeyboardMarkup(buttons))
             else:
@@ -156,7 +156,7 @@ async def group(client, message):
         buttons.append(
             [InlineKeyboardButton(text=f"📃 Pages 1/{data['total']}",callback_data="pages")]
         )
-        poster="https://s3.zerochan.net/240/37/27/2803887.jpg"
+        poster="https://static.zerochan.net/Archer.%28Ishtar%29.full.2803887.jpg"
         if poster:
             await message.reply_photo(photo=poster, caption=mo_tech_yt, reply_markup=InlineKeyboardMarkup(buttons))
         else:
@@ -312,18 +312,12 @@ async def cb_handler(client: Client, query: CallbackQuery):
                         f_caption=f_caption
                 if f_caption is None:
                     f_caption = f"{title}"
-                buttons = [
-                    [
-                        InlineKeyboardButton('🖥️ How To Own 🖥️', url=f'{TUTORIAL}')
-                    ]
-                    ]
                 
                 await query.answer()
                 await client.send_cached_media(
                     chat_id=query.from_user.id,
                     file_id=file_id,
                     caption=f_caption,
-                    reply_markup=InlineKeyboardMarkup(buttons)
                     )
 
 
