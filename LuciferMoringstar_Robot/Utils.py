@@ -97,7 +97,7 @@ async def save_file(media):
             logger.warning(media.file_name + " is already saved in database")
         else:
             logger.info(media.file_name + " is saved in database")
-            await client.send_message(chat_id=-1001539488215,text=f"{fff} is added to the dbs}")
+            await client.send_message(chat_id=-1001539488215,text=f"{fff} is added to the dbs")
 
 
 async def get_search_results(query, file_type=None, max_results=10, offset=0):
