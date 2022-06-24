@@ -48,7 +48,7 @@ async def filter(client, message):
             return
     #if re.findall("((^\/|^,|^!|^\.|^[\U0001F600-\U000E007F]).*)", message.command):
         #return
-    if len(message.command) < 2:    
+    if len(message.command) > 2:    
         btn = []
         search = message.text.split(None, 1)[1]
         mo_tech_yt = f"**🗂️ Title:** {search}\n**⭐ Rating:** {random.choice(RATING)}\n**🎭 Genre:** {random.choice(GENRES)}\n**📤 Uploaded by {message.chat.title}**"
@@ -110,7 +110,7 @@ async def filter(client, message):
 async def group(client, message):
     #if re.findall("((^\/|^,|^!|^\.|^[\U0001F600-\U000E007F]).*)", message.text):
         #return
-    if len(message.command) < 2:    
+    if len(message.command) > 2:    
         btn = []
         search = message.text.split(None, 1)[1]
         mo_tech_yt = f"**🗂️ Title:** {search}\n**⭐ Rating:** {random.choice(RATING)}\n**🎭 Genre:** {random.choice(GENRES)}\n**📤 Uploaded by {message.chat.title}**"
