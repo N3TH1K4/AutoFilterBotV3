@@ -8,7 +8,7 @@ id_pattern = re.compile(r'^.\d+$')
 SESSION = 'LuciferMoringstar_Robot'
 API_ID = 18983092
 API_HASH = "a6005a70e88369b4fb08b8350ebbdd35"
-BOT_TOKEN = "5546706024:AAGLXfcMpLCfhQS2UpIbIDwmQYM7D73ECC8"
+BOT_TOKEN = "5583618865:AAEhX7bv8EnhJgkgfvNmQqUV6B-5uEl_yjQ"
 
 # Bot settings
 CACHE_TIME = 300
@@ -34,12 +34,15 @@ DATABASE_NAME = "Tets"
 COLLECTION_NAME = 'Telegram_files'
 
 # Messages
-default_start_msg = """
-**Hi, I'm Auto Filter V3**
 
-Here you can search files in Inline mode as well as PM, Use the below buttons to search files or send me the name of file to search.
+START_MSG = """
+**Hello** I'm Nobara Kugisaki
+You can get anime using me! Use `/anime anime_name` to search an anime
+Inline Mode Is also Working
+
+**NOTE:** I can Only give animes in @Otaku_Network and @OngoingAnimeNet  
+
 """
-START_MSG = environ.get('START_MSG', default_start_msg)
 
 FILE_CAPTION = ""
 OMDB_API_KEY = ""
