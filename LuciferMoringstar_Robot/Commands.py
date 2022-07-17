@@ -36,7 +36,7 @@ async def start(bot, message):
                 if user.status == "kicked":
                     await bot.send_message(
                         chat_id=message.from_user.id,
-                        text="Sorry Sir, You are Banned to use me.",
+                        text="Sorry, You are Banned to use me.",
                         parse_mode="markdown",
                         disable_web_page_preview=True
                     )
@@ -58,13 +58,13 @@ async def start(bot, message):
                 f_caption=files.caption
                 if CUSTOM_FILE_CAPTION:
                     try:
-                        f_caption=CUSTOM_FILE_CAPTION.format(file_name=title, file_size=size, file_caption=f_caption)
+                        f_caption="Powered By: **@Otaku_Network**"
                     except Exception as e:
                         print(e)
-                        f_caption=f_caption
+                        f_caption="Powered By: **@Otaku_Network**"
                 if f_caption is None:
                     if "@Anime_Gallery" in files.file_name:
-                        f_caption = f"{files.file_name}\n**Owner of This File is @Anime_Gallery Team**\n\nAnime Filter Powered By: __HasHCatz__"
+                        f_caption = "Powered By: **@Otaku_Network**"
                 await bot.send_cached_media(
                     chat_id=message.from_user.id,
                     file_id=file_id,
@@ -86,7 +86,23 @@ async def start(bot, message):
             )
         )
     else:
-        await message.reply_text("")
+        butt = [
+        [
+        InlineKeyboardButton('Otaku Network', url="https://t.me/Otaku_Network")
+        ],
+         [
+        InlineKeyboardButton('Ongoing Anime Net', url="https://t.me/OngoingAnimeNet")
+        ]
+        [
+        InlineKeyboardButton('GO Inline', switch_inline_query_current_chat="")
+        ]]
+        await message.reply_text("""
+**Hello** I'm Nobara Kugisaki
+You can get anime using me! Use `/anime anime_name` to search an anime
+Inline Mode Is also Working
+
+**NOTE:** I can Only give animes in @Otaku_Network and @OngoingAnimeNet  
+""",reply_markup=butt)
         StopPropagation
 
 @Client.on_message(filters.command('filterchannel') & filters.user(ADMINS))
