@@ -92,7 +92,7 @@ async def start(bot, message):
         ],
          [
         InlineKeyboardButton('Ongoing Anime Net', url="https://t.me/OngoingAnimeNet")
-        ]
+        ],
         [
         InlineKeyboardButton('GO Inline', switch_inline_query_current_chat="")
         ]]
