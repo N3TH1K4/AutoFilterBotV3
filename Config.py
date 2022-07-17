@@ -5,7 +5,7 @@ from os import environ
 id_pattern = re.compile(r'^.\d+$')
 
 # Bot information
-SESSION = 'LuciferMoringstar_Robot'
+SESSION = 'Nobara'
 API_ID = 18983092
 API_HASH = "a6005a70e88369b4fb08b8350ebbdd35"
 BOT_TOKEN = "5583618865:AAEhX7bv8EnhJgkgfvNmQqUV6B-5uEl_yjQ"
@@ -21,7 +21,7 @@ BROADCAST_AS_COPY = True
 
 # Admins, Channels & Users
 ADMINS = 1930645496
-CHANNELS = -1001648561723
+CHANNELS = -1001683674553
 auth_users = [int(user) if id_pattern.search(user) else user for user in environ.get('AUTH_USERS', '').split()]
 AUTH_USERS = (auth_users + ADMINS) if auth_users else []
 auth_channel = ""
@@ -44,7 +44,7 @@ Inline Mode Is also Working
 
 """
 
-FILE_CAPTION = ""
+FILE_CAPTION = "**Powered By: **@otaku_network**"
 OMDB_API_KEY = ""
 if FILE_CAPTION.strip() == "":
     CUSTOM_FILE_CAPTION=None
