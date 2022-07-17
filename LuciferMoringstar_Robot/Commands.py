@@ -86,7 +86,7 @@ async def start(bot, message):
             )
         )
     else:
-        butt = [
+        butt = InlineKeyboardMarkup([
         [
         InlineKeyboardButton('Otaku Network', url="https://t.me/Otaku_Network")
         ],
@@ -95,7 +95,7 @@ async def start(bot, message):
         ],
         [
         InlineKeyboardButton('GO Inline', switch_inline_query_current_chat="")
-        ]]
+        ]])
         await bot.send_message(chat_id,text="""
 **Hello** I'm Nobara Kugisaki
 You can get anime using me! Use `/anime anime_name` to search an anime
