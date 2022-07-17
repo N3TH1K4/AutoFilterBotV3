@@ -10,7 +10,107 @@ import random
 BUTTONS = {}
 BOT = {}
 
-@Client.on_message(filters.command("sanime") & filters.private & filters.incoming & filters.user(AUTH_USERS) if AUTH_USERS else filters.command("sanime") & filters.private & filters.incoming)
+anime_query = '''
+   query ($id: Int,$page: Int,$search: String) { 
+      Media (id: $id, type: ANIME,search: $search) { 
+        id
+        title {
+          romaji
+          english
+          native
+        }
+        description (asHtml: false)
+        startDate{
+            year
+            month
+            day
+          }
+        endDate{
+            year
+            month
+            day
+            }
+          episodes
+          isLicensed
+          recommendations(page:$page, perPage:10, sort:RATING_DESC,){
+            pageInfo {
+                lastPage
+                total}
+            edges{
+                node{
+                    mediaRecommendation{title{romaji}
+                    coverImage{
+              extraLarge}
+              siteUrl
+              averageScore
+                    id}
+                    rating
+                }}
+          }
+          isAdult
+          popularity
+          source
+          externalLinks{
+              type
+              url
+              site
+              language
+              icon
+              isDisabled
+              }
+          season
+          type
+          format
+          status
+          countryOfOrigin
+          duration
+          hashtag
+          siteUrl
+          studios{
+              nodes{
+                   name
+              }
+          }
+          nextAiringEpisode {
+              timeUntilAiring
+              episode
+          }
+          trailer{
+               id
+               site 
+               thumbnail
+          }
+          averageScore
+          genres
+          synonyms
+          relations{
+            edges{
+                relationType
+                node{
+                    title{romaji}}
+                    }
+          }
+          bannerImage
+          coverImage{
+              extraLarge}
+          characters(page: $page, perPage: 25,sort:ROLE){
+                pageInfo {
+                    lastPage
+                    total
+              }
+              edges{
+                  node{
+                    name{full}
+                      }
+                  role
+                  }
+                }
+                  
+      }
+    }
+'''
+url = 'https://graphql.anilist.co'
+@Client.on_message(filters.command("sanime") & filters.private & filters.incoming & filters.user(AUTH_USERS) if AUTH_USERS else filters.command("anime") & filters.private & filters.incoming)
 async def filter(client, message):
     if AUTH_CHANNEL:
         invite_link = await client.create_chat_invite_link(int(AUTH_CHANNEL))
@@ -34,16 +134,104 @@ async def filter(client, message):
             return
     #if re.findall("((^\/|^,|^!|^\.|^[\U0001F600-\U000E007F]).*)", message.command):
         #return
-    if len(message.command) > 2:    
+    if len(message.command) > 1:    
         btn = []
         search = message.text.split(None, 1)[1]
         files = await get_filter_results(query=search)
-        mo_tech_yt = f"Here's The Result For The Query **{search}**"
+        variables = {'search': search}
+        json = requests.post(url,json={
+            'query': anime_query,
+            'variables': variables}).json()
+        if "errors" in json.keys():
+            await client.send_message(user_id,"Anime not found")
+            continue
+        search = search.replace('','_')
+        json = json['data']['Media']
+        titleen = json['title']['english']
+        titleja = json['title']['romaji']
+        score = json['averageScore']
+        surl = json['siteUrl']
+        tyype=json['format']
+        idm = json.get("id")
+        dura = json['duration']
+        duration = f"{dura}  Minutes Per Ep."
+        cover = json['coverImage']['extraLarge']
+        syr = json['startDate']['year']
+        smon = json['startDate']['month']
+        sday = json['startDate']['day']
+        airdate = f"{syr}.{smon}.{sday}"
+        if smon and sday == None:
+            airdate = f"not yet relesed Year That This Anime Gonna Relese is {syr}"
+        elif syr == None:
+            airdate ="Not Yet Announced"
+        else:
+            airdate = airdate
+        endyr= json['endDate']['year']
+        endmonth = json['endDate']['month']
+        endday = json['endDate']['day']
+        enddate = f"{endyr}.{endmonth}.{endday}"
+        if endmonth and endday == None:
+            enddate = f"The year This Anime finished was {endyr}"
+        elif endyr == None:
+            enddate = "Its Not Even Started"
+        else:
+            enddate =enddate
+        country= json['countryOfOrigin']
+        if country == "JP":
+            country = "Japan 🇯🇵"
+        elif country == "CN":
+            country = "China 🇨🇳"
+        else:
+            country = country
+        popp = json['popularity']
+        popp = f"{popp} Anilist Users have This Anime In Their Lists"
+        episodes= json.get('episodes', 'N/A')
+        if json['nextAiringEpisode']:
+              time = json['nextAiringEpisode']['timeUntilAiring'] * 1000
+              time = t(time)
+              newep = f"{json['nextAiringEpisode']['episode']} is Airing on {time}"
+        else:
+            newep = "Already Finished Or Not Relesed Yet"
+        adult = json['isAdult']
+        if adult == True:
+            adult = " Yeah"
+        else:
+            adult = " Nope"
+        genres = ""
+        for x in json['genres']:
+                genres += f"{x}, "
+        genres = genres[:-2]
+        genres = genres.replace("Action", "👊Action").replace("Adventure", "🏕Adventure").replace("Comedy", "😂Comedy").replace("Drama", "💃Drama").replace("Ecchi", "😘Ecchi").replace("Fantasy", "🧚🏻‍♂️Fantasy").replace("Hentai", "🔞Hentai").replace("Horror", "👻Horror").replace("Mahou Shoujo", "🧙Mahou Shoujo").replace("Mecha", "🚀Mecha").replace("Music", "🎸Music").replace("Mystery", "🔎Mystery").replace("Psychological", "😵‍💫Psychological").replace("Romance", "❤️Romance").replace("Sci-Fi", "🤖Sci-Fi").replace("Slice of Life", "🍃Slice of Life").replace("Sports", "⚽️Sports").replace("Supernatural", "⚡️Supernatural").replace("Thriller", "😳Thriller")                                                                       
+        title_img = f"https://img.anili.st/media/{idm}"
+        final_cap = f"""
+`English Title:`  **{titleen}**
+`Japanese Title:`  **{titleja}**
+`Country:`  **{country}**
+`Score:`  **{score}**
+`Format:`  **{tyype}**
+`Duration:`  **{duration}**
+`Genres:`  **{genres}**
+`Start Date:`  **{airdate}**
+`End Date:`  **{enddate}**
+`Episodes:`  **{episodes}**
+`Popularity:`  **{popp}**
+`Next Epi:`  **{newep}**
+`Is Adult:`  **{adult}**
+"""
+        mo_tech_yt = f"{final_cap}\n\n
         if files:
             for file in files:
                 file_id = file.file_id
                 filename = f"[{get_size(file.file_size)}] {file.file_name}"
                 filename=file.file_name.split(None, 0)[0]
+                if "720p" in filename:
+                    qua = "📌 720p"
+                else:
+                    qua = "📌 1080p"
+                if "Sub" in filename:
+                    du = "English Subbed"
+                else:
+                    du = "Dual Audio"
                 btn.append(
                     [InlineKeyboardButton(text=f"{filename}",callback_data=f"pr0fess0r_99#{file_id}")]
                     )
@@ -51,7 +239,7 @@ async def filter(client, message):
             await client.send_sticker(chat_id=message.from_user.id, sticker='CAACAgQAAxkBAAICeWK1MzZWqrA4kt0M2dB-FhPf7KRSAAJ-zQ8AAZXbYi-BuAYMW1yptR4E')
             await message.reply_text(f"I aint got  **{search}**  in my DBS")
             return
-
+        mo_tech_yt = f"{final_cap}\n\n**{qua}** `{du}`
         if not btn:
             await message.reply_text(f"I aint got  **{search}**  in my DBS")
             return
@@ -68,7 +256,7 @@ async def filter(client, message):
             buttons.append(
                 [InlineKeyboardButton(text="📝 Pages 1/1",callback_data="pages")]
             )
-            poster="https://s3.zerochan.net/240/37/27/2803887.jpg"
+            poster=cover
             if poster:
                 await message.reply_photo(photo=poster, caption=mo_tech_yt, reply_markup=InlineKeyboardMarkup(buttons))
 
