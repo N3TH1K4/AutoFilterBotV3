@@ -8,7 +8,7 @@ id_pattern = re.compile(r'^.\d+$')
 SESSION = 'Nobara'
 API_ID = 18983092
 API_HASH = "a6005a70e88369b4fb08b8350ebbdd35"
-BOT_TOKEN = "5583618865:AAEhX7bv8EnhJgkgfvNmQqUV6B-5uEl_yjQ"
+BOT_TOKEN = "5529139112:AAFNLYfMy-y9sS_n8Irv7fzk9K8mHKPrsOo"
 
 # Bot settings
 CACHE_TIME = 300
