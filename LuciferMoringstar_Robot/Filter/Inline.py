@@ -12,14 +12,6 @@ cache_time = 0 if AUTH_USERS or AUTH_CHANNEL else CACHE_TIME
 @Client.on_inline_query(filters.user(AUTH_USERS) if AUTH_USERS else None)
 async def answer(bot, query):
     """Show search results for given inline query"""
-
-    if AUTH_CHANNEL and not await is_subscribed(bot, query):
-        await query.answer(results=[],
-                           cache_time=0,
-                           switch_pm_text='You have to subscribe my channel to use the bot',
-                           switch_pm_parameter="subscribe")
-        return
-
     results = []
     if '|' in query.query:
         string, file_type = query.query.split('|', maxsplit=1)
@@ -57,7 +49,7 @@ async def answer(bot, query):
                 reply_markup=reply_markup))
 
     if results:
-        switch_pm_text = f"Here The List OF Anime"
+        switch_pm_text = f"Here is the anime for Query "
         if string:
             switch_pm_text += f" for {string}"
 
@@ -76,7 +68,7 @@ async def answer(bot, query):
                            switch_pm_parameter="error")
     else:
 
-        switch_pm_text = f'No Anime!'
+        switch_pm_text = f'No Anime'
         if string:
             switch_pm_text += f' for "{string}"'
 
@@ -89,7 +81,9 @@ async def answer(bot, query):
 
 def get_reply_markup(query):
     buttons = [[
-        InlineKeyboardButton('Search Again', switch_inline_query_current_chat=query)
+        InlineKeyboardButton('Deploy Video', url=f'{TUTORIAL}')
+        ],[
+        InlineKeyboardButton('🔍 Search again 🔎', switch_inline_query_current_chat=query)
         ]]
     return InlineKeyboardMarkup(buttons)
 
