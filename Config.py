@@ -16,7 +16,7 @@ USE_CAPTION_FILTER = False
 
 BROADCAST_CHANNEL = -1001558732171
 ADMIN_ID = 1930645496
-DB_URL = "mongodb+srv://TROJ3N:Nethika123@cluster0.uppg6.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+DB_URL = "mongodb+srv://nobara:nobara@cluster0.lztoa.mongodb.net/?retryWrites=true&w=majority"
 BROADCAST_AS_COPY = True
 
 # Admins, Channels & Users
