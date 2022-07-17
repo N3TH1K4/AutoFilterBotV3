@@ -8,7 +8,7 @@ id_pattern = re.compile(r'^.\d+$')
 SESSION = 'LuciferMoringstar_Robot'
 API_ID = 18983092
 API_HASH = "a6005a70e88369b4fb08b8350ebbdd35"
-BOT_TOKEN = "1977805563:AAFgr7EsLJHqBTo8jOSxbU6bH8AMM8nTzTg"
+BOT_TOKEN = "5546706024:AAGLXfcMpLCfhQS2UpIbIDwmQYM7D73ECC8"
 
 # Bot settings
 CACHE_TIME = 300
@@ -21,7 +21,7 @@ BROADCAST_AS_COPY = True
 
 # Admins, Channels & Users
 ADMINS = 1930645496
-CHANNELS = -1001553755993
+CHANNELS = -1001648561723
 auth_users = [int(user) if id_pattern.search(user) else user for user in environ.get('AUTH_USERS', '').split()]
 AUTH_USERS = (auth_users + ADMINS) if auth_users else []
 auth_channel = ""
