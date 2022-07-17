@@ -96,7 +96,7 @@ async def start(bot, message):
         [
         InlineKeyboardButton('GO Inline', switch_inline_query_current_chat="")
         ]]
-        await client.send_message(chat_id,text="""
+        await bot.send_message(chat_id,text="""
 **Hello** I'm Nobara Kugisaki
 You can get anime using me! Use `/anime anime_name` to search an anime
 Inline Mode Is also Working
