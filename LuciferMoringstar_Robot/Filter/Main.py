@@ -7,6 +7,7 @@ from pyrogram.errors import UserNotParticipant
 from LuciferMoringstar_Robot import get_filter_results, get_file_details, is_subscribed, get_poster
 from LuciferMoringstar_Robot import RATING, GENRES, HELP, ABOUT
 import random
+import requests
 BUTTONS = {}
 BOT = {}
 
@@ -109,8 +110,31 @@ anime_query = '''
       }
     }
 '''
+def shorten(description, info='anilist.co'):
+    description = ""
+    if len(description) > 700:
+        description = description[0:500] + '....'
+        description += f'_{description}_[Read More]({info})'
+    else:
+        description += f"_{description}_"
+    return description
+
+def t(milliseconds: int) -> str:
+    """Inputs time in milliseconds, to get beautified time,
+    as string"""
+    seconds, milliseconds = divmod(int(milliseconds), 1000)
+    minutes, seconds = divmod(seconds, 60)
+    hours, minutes = divmod(minutes, 60)
+    days, hours = divmod(hours, 24)
+    tmp = ((str(days) + " Days, ") if days else "") + \
+        ((str(hours) + " Hours, ") if hours else "") + \
+        ((str(minutes) + " Minutes, ") if minutes else "") + \
+        ((str(seconds) + " Seconds, ") if seconds else "") + \
+        ((str(milliseconds) + " ms, ") if milliseconds else "")
+    return tmp[:-2]
+
 url = 'https://graphql.anilist.co'
-@Client.on_message(filters.command("sanime") & filters.private & filters.incoming & filters.user(AUTH_USERS) if AUTH_USERS else filters.command("anime") & filters.private & filters.incoming)
+@Client.on_message(filters.command("anime") & filters.private & filters.incoming & filters.user(AUTH_USERS) if AUTH_USERS else filters.command("anime") & filters.private & filters.incoming)
 async def filter(client, message):
     if AUTH_CHANNEL:
         invite_link = await client.create_chat_invite_link(int(AUTH_CHANNEL))
@@ -144,7 +168,7 @@ async def filter(client, message):
             'variables': variables}).json()
         if "errors" in json.keys():
             await client.send_message(user_id,"Anime not found")
-            continue
+            return
         search = search.replace('','_')
         json = json['data']['Media']
         titleen = json['title']['english']
@@ -218,7 +242,7 @@ async def filter(client, message):
 `Next Epi:`  **{newep}**
 `Is Adult:`  **{adult}**
 """
-        mo_tech_yt = f"{final_cap}\n\n
+        mo_tech_yt = f"{final_cap}\n\n"
         if files:
             for file in files:
                 file_id = file.file_id
@@ -236,10 +260,10 @@ async def filter(client, message):
                     [InlineKeyboardButton(text=f"{filename}",callback_data=f"pr0fess0r_99#{file_id}")]
                     )
         else:
-            await client.send_sticker(chat_id=message.from_user.id, sticker='CAACAgQAAxkBAAICeWK1MzZWqrA4kt0M2dB-FhPf7KRSAAJ-zQ8AAZXbYi-BuAYMW1yptR4E')
+            await client.send_sticker(chat_id=message.from_user.id, sticker='CAACAgUAAxkBAAIEv2LTgij7vceWNmOrs1oKJ4tWvjsOAAIsAgACFU2xVK6IRLzwatnPHgQ')
             await message.reply_text(f"I aint got  **{search}**  in my DBS")
             return
-        mo_tech_yt = f"{final_cap}\n\n**{qua}** `{du}`
+        mo_tech_yt = f"{final_cap}\n**{qua}** `{du}`"
         if not btn:
             await message.reply_text(f"I aint got  **{search}**  in my DBS")
             return
@@ -254,7 +278,7 @@ async def filter(client, message):
         else:
             buttons = btn
             buttons.append(
-                [InlineKeyboardButton(text="📝 Pages 1/1",callback_data="pages")]
+                [InlineKeyboardButton(text="🖤 Pages 1/1",callback_data="pages")]
             )
             poster=cover
             if poster:
@@ -271,9 +295,9 @@ async def filter(client, message):
             [InlineKeyboardButton(text="NEXT ⤐",callback_data=f"next_0_{keyword}")]
         )    
         buttons.append(
-            [InlineKeyboardButton(text=f"📝 Pages 1/{data['total']}",callback_data="pages")]
+            [InlineKeyboardButton(text=f"🖤 Pages 1/{data['total']}",callback_data="pages")]
         )
-        poster="https://s3.zerochan.net/240/37/27/2803887.jpg"
+        poster=cover
         if poster:
             await message.reply_photo(photo=poster, caption=mo_tech_yt, reply_markup=InlineKeyboardMarkup(buttons))
         else:
@@ -385,7 +409,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     [InlineKeyboardButton("⬷ BACK", callback_data=f"back_{int(index)+1}_{keyword}")]
                 )
                 buttons.append(
-                    [InlineKeyboardButton(f"📝 Pages {int(index)+2}/{data['total']}", callback_data="pages")]
+                    [InlineKeyboardButton(f"🖤 Pages {int(index)+2}/{data['total']}", callback_data="pages")]
                 )
 
                 await query.edit_message_reply_markup( 
@@ -399,7 +423,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     [InlineKeyboardButton("⬷ BACK", callback_data=f"back_{int(index)+1}_{keyword}"),InlineKeyboardButton("NEXT ⤐", callback_data=f"next_{int(index)+1}_{keyword}")]
                 )
                 buttons.append(
-                    [InlineKeyboardButton(f"📝 Pages {int(index)+2}/{data['total']}", callback_data="pages")]
+                    [InlineKeyboardButton(f"🖤 Pages {int(index)+2}/{data['total']}", callback_data="pages")]
                 )
 
                 await query.edit_message_reply_markup( 
@@ -423,7 +447,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     [InlineKeyboardButton("NEXT ⤐", callback_data=f"next_{int(index)-1}_{keyword}")]
                 )
                 buttons.append(
-                    [InlineKeyboardButton(f"📝 Pages {int(index)}/{data['total']}", callback_data="pages")]
+                    [InlineKeyboardButton(f"🖤 Pages {int(index)}/{data['total']}", callback_data="pages")]
                 )
 
                 await query.edit_message_reply_markup( 
@@ -437,7 +461,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                     [InlineKeyboardButton("⬷ BACK", callback_data=f"back_{int(index)-1}_{keyword}"),InlineKeyboardButton("NEXT ⤐", callback_data=f"next_{int(index)-1}_{keyword}")]
                 )
                 buttons.append(
-                    [InlineKeyboardButton(f"📝 Pages {int(index)}/{data['total']}", callback_data="pages")]
+                    [InlineKeyboardButton(f"🖤 Pages {int(index)}/{data['total']}", callback_data="pages")]
                 )
 
                 await query.edit_message_reply_markup( 
@@ -455,14 +479,12 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 f_caption=files.caption
                 if CUSTOM_FILE_CAPTION:
                     try:
-                        f_caption=CUSTOM_FILE_CAPTION.format(file_name=title, file_size=size, file_caption=f_caption)
+                        f_caption="Powered By: **@Otaku_Network**"
                     except Exception as e:
                         print(e)
-                        f_caption=f_caption
-                if f_caption is None:
-                    if "@Anime_Gallery" in files.file_name:
-                        f_caption = f"{files.file_name}\n**Owner of This File is @Anime_Gallery Team**\n\nAnime Filter Powered By: __HasHCatz__"
-                    #f_caption = f"{files.file_name}\n**"
+                        f_caption="Powered By: **@Otaku_Network**"
+                if f_caption is None: 
+                    f_caption = "Powered By: **@Otaku_Network**"
                 
                 await query.answer()
                 await client.send_cached_media(
