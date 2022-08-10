@@ -5,10 +5,10 @@ from os import environ
 id_pattern = re.compile(r'^.\d+$')
 
 # Bot information
-SESSION = 'Nobara_Kugisaki'
+SESSION = 'Nobara_Kugisakii'
 API_ID = 18983092
 API_HASH = "a6005a70e88369b4fb08b8350ebbdd35"
-BOT_TOKEN = "5529139112:AAFNLYfMy-y9sS_n8Irv7fzk9K8mHKPrsOo"
+BOT_TOKEN = "5346281142:AAGyQRPmb-teZrkI8AaJnSRDWxVdfJbrvuc"
 
 # Bot settings
 CACHE_TIME = 300
@@ -30,8 +30,8 @@ AUTH_GROUPS = [int(admin) for admin in environ.get("AUTH_GROUPS", "").split()]
 TUTORIAL = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 # MongoDB information
 DATABASE_URI = "mongodb+srv://TROJ3N:Nethika123@cluster0.uppg6.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-DATABASE_NAME = "nobara_kugisaki"
-COLLECTION_NAME = 'ongoing_anime'
+DATABASE_NAME = "nobara_kugisakii"
+COLLECTION_NAME = 'ongoing_animee'
 
 # Messages
 
