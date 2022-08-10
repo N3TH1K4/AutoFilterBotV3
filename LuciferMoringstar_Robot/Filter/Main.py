@@ -134,7 +134,7 @@ def t(milliseconds: int) -> str:
     return tmp[:-2]
 
 url = 'https://graphql.anilist.co'
-@Client.on_message(filters.command("anime") & filters.private & filters.incoming & filters.user(AUTH_USERS) if AUTH_USERS else filters.command("anime") & filters.private & filters.incoming)
+@Client.on_message(filters.command("search") & filters.private & filters.incoming & filters.user(AUTH_USERS) if AUTH_USERS else filters.command("search") & filters.private & filters.incoming)
 async def filter(client, message):
     if AUTH_CHANNEL:
         invite_link = await client.create_chat_invite_link(int(AUTH_CHANNEL))
@@ -225,6 +225,8 @@ async def filter(client, message):
         for x in json['genres']:
                 genres += f"{x}, "
         genres = genres[:-2]
+        if genres == "":
+            genres = None
         genres = genres.replace("Action", "👊Action").replace("Adventure", "🏕Adventure").replace("Comedy", "😂Comedy").replace("Drama", "💃Drama").replace("Ecchi", "😘Ecchi").replace("Fantasy", "🧚🏻‍♂️Fantasy").replace("Hentai", "🔞Hentai").replace("Horror", "👻Horror").replace("Mahou Shoujo", "🧙Mahou Shoujo").replace("Mecha", "🚀Mecha").replace("Music", "🎸Music").replace("Mystery", "🔎Mystery").replace("Psychological", "😵‍💫Psychological").replace("Romance", "❤️Romance").replace("Sci-Fi", "🤖Sci-Fi").replace("Slice of Life", "🍃Slice of Life").replace("Sports", "⚽️Sports").replace("Supernatural", "⚡️Supernatural").replace("Thriller", "😳Thriller")                                                                       
         title_img = f"https://img.anili.st/media/{idm}"
         final_cap = f"""
@@ -303,7 +305,7 @@ async def filter(client, message):
         else:
             await message.reply_text(mo_tech_yt, reply_markup=InlineKeyboardMarkup(buttons))
 
-@Client.on_message(filters.command("sanime") & filters.group & filters.incoming & filters.chat(AUTH_GROUPS) if AUTH_GROUPS else filters.command("sanime") & filters.group & filters.incoming)
+@Client.on_message(filters.command("searchdeafeaf") & filters.group & filters.incoming & filters.chat(AUTH_GROUPS) if AUTH_GROUPS else filters.command("sanimesadadada") & filters.group & filters.incoming)
 async def group(client, message):
     #if re.findall("((^\/|^,|^!|^\.|^[\U0001F600-\U000E007F]).*)", message.text):
         #return
